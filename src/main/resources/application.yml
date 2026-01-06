@@ -12,8 +12,8 @@ spring:
     redis:
       url: rediss://default:AWSWAAIncDIxODkyM2RhNWUyN2Q0NWMyOWRjM2RjMzRhY2IzN2JmZXAyMjU3NTA@more-cub-25750.upstash.io:6379
       ssl:
-      enabled: true # Ép buộc sử dụng SSL
-      timeout: 2s
+        enabled: true # Ép buộc sử dụng SSL
+      timeout: 5s
 
 gemini:
   api-key: AIzaSyBaMz2O0WgWVvMwMMrdpb82-LWi2wU2PfY
