@@ -1,0 +1,24 @@
+server:
+  port: 5050
+
+spring:
+  application:
+    name: summarizer-api
+
+  jackson:
+    default-property-inclusion: non_null
+
+  data:
+    redis:
+      url: rediss://default:AWSWAAIncDIxODkyM2RhNWUyN2Q0NWMyOWRjM2RjMzRhY2IzN2JmZXAyMjU3NTA@more-cub-25750.upstash.io:6379
+      timeout: 2s
+
+gemini:
+  api-key: AIzaSyBaMz2O0WgWVvMwMMrdpb82-LWi2wU2PfY
+  model: gemini-2.5-flash
+  endpoint: https://generativelanguage.googleapis.com/v1beta/models
+  timeout: 10s
+
+logging:
+  level:
+    root: INFO
