@@ -13,4 +13,9 @@ public class TextUtil {
     public String hash(String text) {
         return DigestUtils.sha256Hex(text);
     }
+
+    public String[] splitIntoSentences(String text) {
+        // Tách câu dựa trên dấu chấm, dấu hỏi, dấu chấm than followed by space
+        return text.split("(?<=[.!?])\\s+");
+    }
 }
