@@ -10,10 +10,14 @@ spring:
 
   data:
     redis:
-      url: rediss://default:AWSWAAIncDIxODkyM2RhNWUyN2Q0NWMyOWRjM2RjMzRhY2IzN2JmZXAyMjU3NTA@more-cub-25750.upstash.io:6379
+      host: more-cub-25750.upstash.io
+      port: 6379
+      username: default
+      password: AWSWAAIncDIxODkyM2RhNWUyN2Q0NWMyOWRjM2RjMzRhY2IzN2JmZXAyMjU3NTA
       ssl:
-        enabled: true # Ép buộc sử dụng SSL
-      timeout: 5s
+        enabled: true
+      timeout: 10s
+      connect-timeout: 10s
 
 gemini:
   api-key: AIzaSyBaMz2O0WgWVvMwMMrdpb82-LWi2wU2PfY
