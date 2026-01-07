@@ -5,6 +5,7 @@ import com.example.summary_ext.dto.SummarizeResponse;
 import com.example.summary_ext.service.SummarizeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,9 +19,8 @@ public class SummarizeController {
     private final SummarizeService service;
 
     @PostMapping("/summarize")
-    public SummarizeResponse summarize(
-        @Valid @RequestBody SummarizeRequest req
-    ) {
-        return service.summarize(req.getText());
+    public ResponseEntity<SummarizeResponse> summarize(@RequestBody SummarizeRequest request) {
+        SummarizeResponse response = service.summarize(request.getText(), request.getSystemPrompt());
+        return ResponseEntity.ok(response);
     }
 }

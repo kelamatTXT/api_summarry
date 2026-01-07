@@ -25,25 +25,31 @@ public class GeminiClient {
         @Value("${gemini.model}")
         private String model;
 
-        public String summarize(String text) {
-                String prompt = """
-                                Tóm tắt đoạn văn sau thành 3–5 gạch đầu dòng.
-                                Giữ ý chính, văn phong học thuật, không suy diễn:
-                                """ + text;
+        public String summarize(String text, String systemPrompt) {
+                String prompt = (systemPrompt != null && !systemPrompt.isEmpty())
+                                ? systemPrompt + "\n\nNội dung cần xử lý: " + text
+                                : """
+                                                Tóm tắt đoạn văn sau thành 3–5 gạch đầu dòng.
+                                                Giữ ý chính, văn phong học thuật, không suy diễn:
+                                                """ + text;
 
                 Map<String, Object> body = Map.of(
                                 "contents", List.of(
                                                 Map.of("parts", List.of(Map.of("text", prompt)))));
 
-                Map res = webClient.post()
-                                .uri(endpoint + "/" + model + ":generateContent?key=" + apiKey)
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .bodyValue(body)
-                                .retrieve()
-                                .bodyToMono(Map.class)
-                                .block(Duration.ofSeconds(10));
+                try {
+                        Map res = webClient.post()
+                                        .uri(endpoint + "/" + model + ":generateContent?key=" + apiKey)
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .bodyValue(body)
+                                        .retrieve()
+                                        .bodyToMono(Map.class)
+                                        .block(Duration.ofSeconds(10));
 
-                return extractText(res);
+                        return extractText(res);
+                } catch (Exception e) {
+                        return "Lỗi kết nối AI (DNS/Network): " + e.getMessage();
+                }
         }
 
         private String extractText(Map<String, Object> res) {

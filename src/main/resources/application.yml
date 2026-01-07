@@ -10,18 +10,12 @@ spring:
 
   data:
     redis:
-      host: more-cub-25750.upstash.io
-      port: 6379
-      username: default
-      password: AWSWAAIncDIxODkyM2RhNWUyN2Q0NWMyOWRjM2RjMzRhY2IzN2JmZXAyMjU3NTA
-      ssl:
-        enabled: true
-      timeout: 10s
-      connect-timeout: 10s
+      url: redis://default:AWSWAAIncDIxODkyM2RhNWUyN2Q0NWMyOWRjM2RjMzRhY2IzN2JmZXAyMjU3NTA@more-cub-25750.upstash.io:6379
+      timeout: 2s
 
 gemini:
-  api-key: AIzaSyBaMz2O0WgWVvMwMMrdpb82-LWi2wU2PfY
-  model: gemini-1.5-flash
+  api-key: AIzaSyDEb5Fj2ECz2Ol6xOq1lkfxsieqARMPqqU
+  model: gemini-2.5-flash-lite
   endpoint: https://generativelanguage.googleapis.com/v1beta/models
   timeout: 10s
 

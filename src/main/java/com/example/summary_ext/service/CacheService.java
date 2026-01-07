@@ -8,25 +8,43 @@ import java.time.Duration;
 
 @Service
 @RequiredArgsConstructor
+@lombok.extern.slf4j.Slf4j
 public class CacheService {
 
     private final StringRedisTemplate redis;
 
     public String get(String key) {
-        return redis.opsForValue().get(key);
+        try {
+            return redis.opsForValue().get(key);
+        } catch (Exception e) {
+            log.error("Redis error (get): {}", e.getMessage());
+            return null;
+        }
     }
 
     public void set(String key, String value) {
-        redis.opsForValue().set(key, value, Duration.ofDays(30));
+        try {
+            redis.opsForValue().set(key, value, Duration.ofDays(30));
+        } catch (Exception e) {
+            log.error("Redis error (set): {}", e.getMessage());
+        }
     }
 
     public void addToRecent(String text) {
-        // Lưu vào một Set hoặc List trong Redis để kiểm tra substring
-        redis.opsForList().leftPush("recent_texts", text);
-        redis.opsForList().trim("recent_texts", 0, 99); // Chỉ giữ 100 bản tin gần nhất
+        try {
+            redis.opsForList().leftPush("recent_texts", text);
+            redis.opsForList().trim("recent_texts", 0, 99);
+        } catch (Exception e) {
+            log.error("Redis error (addToRecent): {}", e.getMessage());
+        }
     }
 
     public java.util.List<String> getRecentTexts() {
-        return redis.opsForList().range("recent_texts", 0, -1);
+        try {
+            return redis.opsForList().range("recent_texts", 0, -1);
+        } catch (Exception e) {
+            log.error("Redis error (getRecentTexts): {}", e.getMessage());
+            return java.util.Collections.emptyList();
+        }
     }
 }
